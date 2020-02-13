@@ -1,0 +1,87 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h1 style="text-align: center">Books</h1><br>
+    </div>
+
+
+    <div class="panel-body">
+        <table class="table table-hover table-sm" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+            <thead class="thead-light">
+                <tr>
+                    <th>Book Title</th>
+                    <th>Book Author</th>
+                    <th>Book Genre</th>
+                    <th>Book Status</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let book of books ">
+                    <td>{{book.title}}</td>
+                    <td>{{book.author}}</td>
+                    <td>{{book.genre}}</td>
+                    <td>{{book.status}}</td>
+                    <td><button type="button" (click)="updateBook(book.id)" class='btn btn-info' data-toggle="modal"
+                         data-target="#myModal">Update</button>
+                    </td>
+                </tr>
+            </tbody><br>
+        </table>
+    </div>
+</div>
+
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form [formGroup]="bookUpdateForm" #updbuk (ngSubmit)="updateBuk(updbuk)">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title" style="text-align: center">Update Book</h4>
+
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body" *ngFor="let book of bookList">
+                    <div [hidden]="isupdated">
+
+                        <input type="hidden" class="form-control" formControlName="id" [(ngModel)]="book.id">
+                        <div class="form-group">
+                            <label for="name">Book Title</label>
+                            <input type="text" class="form-control" formControlName="title" [(ngModel)]="book.title">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Book Author</label>
+                            <input type="text" class="form-control" formControlName="author" [(ngModel)]="book.author">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Book Genre</label>
+                            <input type="text" class="form-control" formControlName="genre" [(ngModel)]="book.genre">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Book Status</label>
+                            <select class="form-control" formControlName="status" [(ngModel)]="book.status">
+                                <option value="yetToRead">Yet to Read</option>
+                                <option value="finishedReading">Finished Reading</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div [hidden]="!isupdated">
+                        <h4>Book Detail Updated!</h4>
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" [hidden]="isupdated">Update</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                        (click)="changeisUpdate()">Close</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
